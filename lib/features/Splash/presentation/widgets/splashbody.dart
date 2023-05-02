@@ -44,7 +44,6 @@ super.dispose();
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Spacer(),
-           
 
               FadeTransition(
                 opacity: fading!,
