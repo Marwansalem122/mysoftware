@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mysoftwareproject/core/constant.dart';
+import 'package:mysoftwareproject/features/Auth/presentation/pages/Adminuser.dart';
 import 'package:mysoftwareproject/features/Auth/presentation/pages/Homepage.dart';
 import 'package:mysoftwareproject/features/Auth/presentation/pages/signup_view.dart';
 import 'package:get/get.dart';
@@ -32,6 +33,7 @@ class _login_bodyState extends State<login_body> {
   Login() async {
     String uid = c1.text;
     String passwd = c2.text;
+
     if (uid.isEmpty) {
       alertdialog(context, "Please Enter User ID");
     } else if (passwd.isEmpty) {
@@ -40,10 +42,19 @@ class _login_bodyState extends State<login_body> {
       await dbhelper.getloginuser(uid, passwd).then((userData) {
         if (userData != null) {
           setSP(userData).whenComplete(() {
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (_) => Homepage()),
-                    (Route<dynamic> route) => false);
+            if(uid=="marwan1"){
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => useradmin()),
+                      (Route<dynamic> route) => false);
+            }
+            else{
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => Homepage()),
+                      (Route<dynamic> route) => false);
+            }
+
           });
         } else {
           alertdialog(context, "Error: User Not Found");
@@ -65,6 +76,7 @@ class _login_bodyState extends State<login_body> {
     return Scaffold(
       backgroundColor: mycolor,
       body: Form(
+        key:_formkey ,
         child: Container(
           width: double.infinity,
           height: double.infinity,
@@ -104,9 +116,7 @@ class _login_bodyState extends State<login_body> {
               Padding(
                 padding: const EdgeInsets.only(left: 22),
                 child: TextButton(
-                    onPressed: (){
-                      Get.to(() => Homepage(), transition: Transition.rightToLeft , duration: Duration(milliseconds: 500));
-                    },style: TextButton.styleFrom(
+                    onPressed:Login ,style: TextButton.styleFrom(
                     backgroundColor: Colors.green,
                     fixedSize: Size(100, 40)
                 ) ,child: Text("Submit",style: TextStyle(fontSize: 20,color: Colors.white,),)),

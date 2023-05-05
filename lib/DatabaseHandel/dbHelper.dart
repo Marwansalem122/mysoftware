@@ -65,4 +65,10 @@ class  dbHelper{
         ?.delete(Table_user, where: '$c_id = ?', whereArgs: [user_id]);
     return res;
   }
+  Future<List<Map<String, dynamic>>?> getAllUsers() async {
+    final dbClient = await db;
+    var res =await dbClient?.query(Table_user);
+    return  res;
+  }
+
 }
